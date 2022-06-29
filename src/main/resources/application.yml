@@ -1,0 +1,14 @@
+spring:
+  config:
+    import: classpath:/key.yml
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: ${key.oauth.github.clientId}
+            clientSecret: ${key.oauth.github.clientSecret}
+
+logging:
+  level:
+    root: info
