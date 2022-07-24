@@ -25,7 +25,6 @@ bin/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-/src/main/resources/auth-rush-firebase-adminsdk-8igjb-e83e7dfc35.json
 
 ### NetBeans ###
 /nbproject/private/
@@ -39,3 +38,6 @@ out/
 /src/main/resources/key.yml
 /docker/.env
 /docker/mariadb/data/*
+
+### alarm ###
+/src/main/resources/auth-rush-firebase-adminsdk-8igjb-e83e7dfc35.json

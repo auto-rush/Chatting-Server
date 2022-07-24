@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class FCMController {
 
-    //웹사이트 최초 접속 시 동작
-    @GetMapping("")
+
+    @GetMapping("alarm")
     public String permitAlarm() {
         return "alarmInit";
     }
