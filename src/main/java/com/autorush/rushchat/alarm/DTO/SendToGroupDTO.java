@@ -7,7 +7,7 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class BasicDTO {
-    private String title;
-    private String body;
+public class SendToGroupDTO {
+    private String topic;
+    private String data;
 }

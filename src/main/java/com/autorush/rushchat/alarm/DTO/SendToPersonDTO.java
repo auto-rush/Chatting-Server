@@ -7,7 +7,7 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class SendDTO {
+public class SendToPersonDTO {
     private BasicDTO notification;
     private String to;
 }

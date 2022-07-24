@@ -2,33 +2,39 @@ package com.autorush.rushchat.alarm.controller;
 
 import com.autorush.rushchat.alarm.AlarmInitializer;
 import com.autorush.rushchat.alarm.DTO.BasicDTO;
-import com.autorush.rushchat.alarm.DTO.SendDTO;
+import com.autorush.rushchat.alarm.DTO.SendToGroupDTO;
+import com.autorush.rushchat.alarm.DTO.SendToPersonDTO;
 import com.autorush.rushchat.alarm.TempGroup;
 import com.autorush.rushchat.config.SecurityConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.stereotype.Service;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(value = FCMRestController.class, excludeFilters = {
@@ -47,6 +53,11 @@ class FCMRestControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Value("${alarm.sdk.json.path}")
+    private String FIREBASE_SDK_JSON_PATH;
+
+//    @Autowired
+//    AlarmInitializer alarmInitializer;
 
     @BeforeEach
     public void setUp() {
@@ -54,7 +65,16 @@ class FCMRestControllerTest {
                 .webAppContextSetup(context)
                 .apply(springSecurity())
                 .build();
-        /*alarmInitializer.init();*/
+//        alarmInitializer.init();
+        try{
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(new ClassPathResource(FIREBASE_SDK_JSON_PATH).getInputStream())).build();
+            if (FirebaseApp.getApps().isEmpty()) {
+                FirebaseApp.initializeApp(options);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -65,7 +85,7 @@ class FCMRestControllerTest {
         int serviceUserCnt = tempGroup.registrationTokens.size();
         assertThat(serviceUserCnt).isGreaterThan(0);
 
-        SendDTO request = SendDTO.builder()
+        SendToPersonDTO request = SendToPersonDTO.builder()
                 .notification(BasicDTO.builder()
                         .title("제목 테스트").body("내용 테스트").build())
                 .to(tempGroup.registrationTokens.get(serviceUserCnt - 1))
@@ -79,6 +99,25 @@ class FCMRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(1))
                 .andExpect(jsonPath("$.failure").value(0));
+
+    }
+
+    @Test
+    @DisplayName("여러 유저에게 'test' 토픽 보내기")
+    @WithMockUser(roles = "USER", username = "test")
+    void send_topic_users() throws Exception {
+
+        SendToGroupDTO request = SendToGroupDTO.builder()
+                .topic("test")
+                .data("test-content")
+                .build();
+
+        mockMvc.perform(post(BASE_URL + "/send-topic")
+                .with(csrf()) //post 보낼 시 필요
+                .content(objectMapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(status().isOk());
 
     }
 
