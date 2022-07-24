@@ -9,6 +9,25 @@ spring:
             clientId: ${key.oauth.github.clientId}
             clientSecret: ${key.oauth.github.clientSecret}
 
+  datasource:
+    hikari:
+      driver-class-name: org.mariadb.jdbc.Driver
+      jdbc-url: jdbc:mariadb://127.0.0.1:3306/rushchat
+      username: ${key.mariadb.username}
+      password: ${key.mariadb.password}
+      minimum-idle: 1
+      maximum-pool-size: 5 # default 10
+      idle-timeout: 10000 # default 10s
+      max-lifetime: 30000 # default 30s
+      connection-timeout: 5000 # default 30s
+
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+
 logging:
   level:
     root: info

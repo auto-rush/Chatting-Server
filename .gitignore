@@ -37,3 +37,6 @@ out/
 
 ### VS Code ###
 .vscode/
+/src/main/resources/key.yml
+/docker/.env
+/docker/mariadb/data/*

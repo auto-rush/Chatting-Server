@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  db:
+    container_name: "mariadb"
+    image: mariadb:10.7.4
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./mariadb/conf.d:/etc/mysql/conf.d"
+      - "./mariadb/data:/var/lib/mysql"
+    env_file: .env
+    environment:
+      TZ: Asia/Seoul
+    networks:
+      - backend
+
+networks:
+  backend:
