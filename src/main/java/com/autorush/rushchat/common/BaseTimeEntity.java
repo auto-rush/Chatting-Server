@@ -1,4 +1,4 @@
-package com.autorush.rushchat.domain;
+package com.autorush.rushchat.common;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
@@ -22,4 +22,3 @@ public abstract class BaseTimeEntity {
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 }
-
