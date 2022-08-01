@@ -11,8 +11,12 @@ public enum ErrorCode {
     HANDLE_ACCESS_DENIED(403, "C004", "권한이 없는 사용자입니다."),
 
     // Member
+    NOT_FOUND_MEMBER(400, "M003", "존재하지 않는 회원입니다."),
 
     // Room
+    NOT_FOUND_ROOM(400, "R001", "존재하지 않는 채팅방입니다."),
+    EXCEEDED_MAX_PARTICIPANTS_VALUE(400, "R002", "제한보다 큰 MaxParticipants 값입니다."),
+    NOT_FOUND_MEMBER_IN_ROOM(400, "R001", "채팅방 내에 존재하지 않는 회원입니다."),
 
     ;
 

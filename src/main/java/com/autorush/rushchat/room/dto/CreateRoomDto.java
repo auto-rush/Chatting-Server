@@ -1,12 +1,13 @@
-package com.autorush.rushchat.domain.room.command;
+package com.autorush.rushchat.room.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class CreateRoomCommand {
+public class CreateRoomDto {
     private String roomName;
-    private String ownerId;
+    private String ownerOAuthId;
+    private String ownerRegisteredPlatform;
     private Long maxParticipants;
 }

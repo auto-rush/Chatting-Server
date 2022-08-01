@@ -1,10 +1,8 @@
-package com.autorush.rushchat.domain.room.entity;
+package com.autorush.rushchat.room.entity;
 
-import com.autorush.rushchat.domain.BaseTimeEntity;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.autorush.rushchat.common.BaseTimeEntity;
+import com.autorush.rushchat.member.entity.Member;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,23 +10,28 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Room extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String roomName;
-    private String ownerId;
+    private String ownerOAuthId;
+    private String ownerRegisteredPlatform;
+    private Long participants;
     private Long maxParticipants;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="rm_room_id")
     private List<RoomMember> roomMembers;
 
     @Builder
-    public Room(String roomName, String ownerId, Long maxParticipants, Member member) {
+    public Room(String roomName, String ownerOAuthId, String ownerRegisteredPlatform, Long maxParticipants, Member member) {
         this.roomName = roomName;
-        this.ownerId = ownerId;
+        this.ownerOAuthId = ownerOAuthId;
+        this.ownerRegisteredPlatform = ownerRegisteredPlatform;
+        this.participants = 1L;
         this.maxParticipants = maxParticipants != null ? maxParticipants : 30L;
         this.roomMembers = new ArrayList<>();
 

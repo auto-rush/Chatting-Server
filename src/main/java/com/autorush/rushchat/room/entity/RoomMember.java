@@ -1,4 +1,4 @@
-package com.autorush.rushchat.domain.room.entity;
+package com.autorush.rushchat.room.entity;
 
 import com.autorush.rushchat.member.entity.Member;
 import lombok.AccessLevel;
@@ -20,7 +20,7 @@ public class RoomMember {
     private Long roomId;
 
     @ManyToOne
-    @JoinColumn(name = "registeredPlatform")
+    @JoinColumn(name = "member_id")
     private Member member;
 
 //    private Long lastMessageId;
