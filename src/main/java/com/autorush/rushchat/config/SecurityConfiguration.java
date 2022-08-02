@@ -1,5 +1,9 @@
 package com.autorush.rushchat.config;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
+import com.autorush.rushchat.auth.service.OAuthUserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -8,10 +12,11 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfiguration {
+
+    private final OAuthUserService oAuthUserService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -31,7 +36,10 @@ public class SecurityConfiguration {
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 )
                 .httpBasic(withDefaults())
-                .oauth2Login();
+                .oauth2Login(o -> o
+                        .userInfoEndpoint()
+                        .userService(oAuthUserService)
+                );
         // @formatter:on
         return http.build();
     }
