@@ -1,5 +1,6 @@
 package com.autorush.rushchat.member.entity;
 
+import com.autorush.rushchat.domain.BaseTimeEntity;
 import com.autorush.rushchat.member.type.Role;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,7 +18,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @NoArgsConstructor
-public class Member /*extends BaseTimeEntity*/{
+public class Member extends BaseTimeEntity {
     @Id
     @GeneratedValue
     private Long id;

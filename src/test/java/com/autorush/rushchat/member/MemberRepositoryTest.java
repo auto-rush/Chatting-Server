@@ -1,5 +1,7 @@
 package com.autorush.rushchat.member;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.autorush.rushchat.member.entity.Member;
 import com.autorush.rushchat.member.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -31,12 +33,15 @@ class MemberRepositoryTest {
     }
 
     @Test
-    @DisplayName("슬라이싱 테스트 의존성 주입 확인")
+    @DisplayName("삽입 및 가져오기 테스트")
     public void insertAndGetTest() {
+        String name = "asdf";
         final Member member = Member.builder()
-            .name("asdf")
+            .name(name)
             .build();
         memberRepository.save(member);
+        final Member byId = memberRepository.getById(1L);
+        assertThat(byId.getName()).isEqualTo(name);
     }
 
 }
