@@ -4,6 +4,8 @@ import com.autorush.rushchat.member.entity.Member;
 import com.autorush.rushchat.member.type.Role;
 import java.util.HashMap;
 import java.util.Map;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -16,6 +18,9 @@ public class OAuthUserDto {
     private final String email;
     private final String profileImage;
 
+    @Enumerated(EnumType.STRING)
+    private final Role role;
+
     @Builder
     public OAuthUserDto(String registeredPlatform, String oAuthId, String name, String nickname, String email, String profileImage) {
         this.registeredPlatform = registeredPlatform;
@@ -24,6 +29,7 @@ public class OAuthUserDto {
         this.nickname = nickname;
         this.email = email;
         this.profileImage = profileImage;
+        this.role = Role.ROLE_USER;
     }
 
     public Map<String, Object> toMap() {
