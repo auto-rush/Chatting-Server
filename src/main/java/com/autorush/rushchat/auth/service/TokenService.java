@@ -1,5 +1,6 @@
 package com.autorush.rushchat.auth.service;
 
+import com.autorush.rushchat.auth.dto.JwtSubject;
 import com.autorush.rushchat.auth.dto.Token;
 import com.autorush.rushchat.member.type.Role;
 import io.jsonwebtoken.Claims;
@@ -38,7 +39,8 @@ public class TokenService {
      * @return 생성된 토큰
      */
     public Token generateToken(String registrationId, String oAuthId, Role role) {
-        Claims claims = Jwts.claims().setSubject(registrationId+oAuthId);
+        JwtSubject jwtSubject = new JwtSubject(registrationId, oAuthId);
+        Claims claims = Jwts.claims().setSubject(jwtSubject.toString());
         claims.put("role", role.name());
 
         Date now = new Date();
@@ -65,4 +67,15 @@ public class TokenService {
             return false;
         }
     }
+
+    /**
+     * token 에서 claim 의 subject를 가져온다.
+     * 우리의 subject 는 registrationId + \t + oAuthId 의 구조를 갖는다.
+     * @param token 우리가 만든 jwt token
+     * @return token 에서 추출한 subject
+     */
+    public String getClaimsSubject(String token) {
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+    }
+
 }
