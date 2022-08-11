@@ -9,10 +9,14 @@ public enum ErrorCode {
     EXTERNAL_SERVER_ERROR(501, "C002", "외부 API 통신 에러입니다."),
     INVALID_INPUT_VALUE(400, "C003", "잘못된 요청 값입니다."),
     HANDLE_ACCESS_DENIED(403, "C004", "권한이 없는 사용자입니다."),
+    FILE_READ_ERROR(500,"C005","파일 읽기 에러입니다."),
+    PARSING_ERROR(500,"C006","파싱을 실패했습니다"),
 
     // Member
 
     // Room
+
+    // Alarm
 
     ;
 
