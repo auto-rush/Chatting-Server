@@ -23,4 +23,10 @@ public class FrontController {
 
         return "home";
     }
+
+    @GetMapping("chat")
+    public String chatGET(){
+
+        return "chat";
+    }
 }
