@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class TokenService {
-    @Value("${private.key.jwt.secret}")
+    @Value("${key.jwt.secret}")
     private String secretKey; // 토큰 서명용 개인키. 그대로 쓰지 않고 Base64 인코딩하여 사용한다.
     private long tokenPeriod = 1000L * 60L * 10L; // 토큰 만료 시간
 
