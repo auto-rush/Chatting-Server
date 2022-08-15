@@ -2,8 +2,13 @@ package com.autorush.rushchat.member.entity;
 
 import com.autorush.rushchat.domain.BaseTimeEntity;
 import com.autorush.rushchat.member.type.Role;
+import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GenerationType;
+import javax.persistence.IdClass;
+import javax.persistence.Table;
 import lombok.Builder;
 
 import javax.persistence.Entity;
@@ -18,14 +23,17 @@ import lombok.Setter;
 @Setter
 @Entity
 @NoArgsConstructor
+@IdClass(MemberPK.class)
+@Table(name = "member", schema = "rushchat")
 public class Member extends BaseTimeEntity {
-    @Id
-    @GeneratedValue
-    private Long id;
-
     // info
-    private String registeredPlatform; // key
-    private String oAuthId; // key
+    @Id
+    @Column(name = "registered_platform")
+    private String registeredPlatform;
+
+    @Id
+    @Column(name = "oauth_id")
+    private String oauthId;
     private String name;
     private String nickname;
     private String email;
@@ -44,11 +52,11 @@ public class Member extends BaseTimeEntity {
     // modifiedAt
 
     @Builder
-    public Member(String registeredPlatform, String oAuthId, String name, String nickname,
+    public Member(String registeredPlatform, String oauthId, String name, String nickname,
         String email,
         String profileImage, Role role) {
         this.registeredPlatform = registeredPlatform;
-        this.oAuthId = oAuthId;
+        this.oauthId = oauthId;
         this.name = name;
         this.nickname = nickname;
         this.email = email;
@@ -61,5 +69,22 @@ public class Member extends BaseTimeEntity {
         this.email = email;
 
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Member that = (Member) o;
+        return Objects.equals(registeredPlatform, that.registeredPlatform) && Objects.equals(oauthId, that.oauthId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(registeredPlatform, oauthId);
     }
 }
