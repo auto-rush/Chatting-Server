@@ -20,6 +20,7 @@
 <div class="container authenticated" style="display:none">
     login success. wait a second...
 </div>
+<button id="alarm_init">초기 알람 설정 (추후 로그인 시에 작동)</button>
 </body>
 <script type="text/javascript">
     $.ajaxSetup({
@@ -43,5 +44,11 @@
             document.location = "http://localhost:8080/home";
         }
     });
+    $("#alarm_init").on("click",function(){
+        $.get("/alarm", function(data) {
+            document.location = "http://localhost:8080/alarm";
+        });
+    });
+
 </script>
 </html>

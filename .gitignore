@@ -38,3 +38,6 @@ out/
 /src/main/resources/key.yml
 /docker/.env
 /docker/mariadb/data/*
+
+### alarm ###
+/src/main/resources/auth-rush-firebase-adminsdk-8igjb-e83e7dfc35.json
