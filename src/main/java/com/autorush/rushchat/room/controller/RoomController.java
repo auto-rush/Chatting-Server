@@ -4,6 +4,7 @@ import com.autorush.rushchat.common.response.ApiResponse;
 import com.autorush.rushchat.common.response.EmptyJsonResponse;
 import com.autorush.rushchat.room.dto.CreateRoomDto;
 import com.autorush.rushchat.room.dto.GetAllRoomDto;
+import com.autorush.rushchat.room.dto.InOutRoomDto;
 import com.autorush.rushchat.room.dto.UpdateRoomDto;
 import com.autorush.rushchat.room.entity.Room;
 import com.autorush.rushchat.room.service.RoomService;
@@ -60,6 +61,20 @@ public class RoomController {
         // TODO - 현재 로그인한 member가 room owner인지 검사하는 기능 추가해야 합니다.
 
         roomService.deleteRoom(roomId);
+        return ApiResponse.success();
+    }
+
+    @PostMapping("/in")
+    public ApiResponse<EmptyJsonResponse> inRoom(@RequestBody @Valid InOutRoomDto dto) {
+        log.info("특정 방 입장");
+        roomService.inRoom(dto);
+        return ApiResponse.success();
+    }
+
+    @PostMapping("/out")
+    public ApiResponse<EmptyJsonResponse> outRoom(@RequestBody @Valid InOutRoomDto dto) {
+        log.info("특정 방 퇴장");
+        roomService.outRoom(dto);
         return ApiResponse.success();
     }
 }
