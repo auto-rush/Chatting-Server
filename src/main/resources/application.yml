@@ -21,6 +21,13 @@ spring:
       max-lifetime: 30000 # default 30s
       connection-timeout: 5000 # default 30s
 
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: chatting
+
   jpa:
     generate-ddl: true
     hibernate:
