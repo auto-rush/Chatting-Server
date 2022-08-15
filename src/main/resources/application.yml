@@ -13,8 +13,8 @@ spring:
     hikari:
       driver-class-name: org.mariadb.jdbc.Driver
       jdbc-url: jdbc:mariadb://127.0.0.1:3306/rushchat
-      username: ${key.mariadb.username}
-      password: ${key.mariadb.password}
+      username: rushchat
+      password: rushchat
       minimum-idle: 1
       maximum-pool-size: 5 # default 10
       idle-timeout: 10000 # default 10s
@@ -31,3 +31,8 @@ spring:
 logging:
   level:
     root: info
+
+alarm:
+  sdk:
+    json:
+      path: auth-rush-firebase-adminsdk-8igjb-e83e7dfc35.json
