@@ -8,7 +8,7 @@ import java.util.function.Function;
 public enum OAuthAttributes {
     GITHUB("github", (attributes) -> OAuthUserDto.builder()
         .registeredPlatform((String) attributes.get("registrationId"))
-        .oAuthId(String.valueOf(attributes.get("id"))) // Integer
+        .oauthId(String.valueOf(attributes.get("id"))) // Integer
         .name((String) attributes.get("name"))
         .nickname((String) attributes.get("login"))
         .email((String) attributes.get("email"))

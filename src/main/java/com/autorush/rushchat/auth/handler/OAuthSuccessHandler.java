@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
@@ -34,13 +33,13 @@ public class OAuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
         // CustomOAuth2UserService 에서 UserDto.toMap 해서 넘겼기 때문에 키 값이 고정이다.
         OAuthUserDto userDto = OAuthUserDto.builder()
             .registeredPlatform((String) attributes.get("registrationId"))
-            .oAuthId(String.valueOf(attributes.get("id"))) // Integer
+            .oauthId(String.valueOf(attributes.get("id"))) // Integer
             .name((String) attributes.get("name"))
             .email((String) attributes.get("email"))
             .profileImage((String) attributes.get("image"))
             .build();
 
-        Token token = tokenService.generateToken(userDto.getRegisteredPlatform(), userDto.getOAuthId(), Role.ROLE_USER);
+        Token token = tokenService.generateToken(userDto.getRegisteredPlatform(), userDto.getOauthId(), Role.ROLE_USER);
         log.info(token.getToken());
 
         Cookie jwtCookie = new Cookie("jwt", token.getToken());

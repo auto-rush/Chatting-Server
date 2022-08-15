@@ -38,7 +38,7 @@ public class JwtFilter extends GenericFilterBean {
         if (token != null && tokenService.verifyToken(token)) {
             JwtSubject jwtSubject = new JwtSubject(tokenService.getClaimsSubject(token));
             // 회원가입이 되어있는 사용자인 경우에만 인증
-            memberRepository.findByRegistrationIdAndOAuthId(jwtSubject.getRegistrationId(), jwtSubject.getOAuthId())
+            memberRepository.findByRegisteredPlatformAndOauthId(jwtSubject.getRegistrationId(), jwtSubject.getOAuthId())
                 .ifPresent(m -> {
                     Authentication authentication = new UsernamePasswordAuthenticationToken(m, "",
                         List.of(new SimpleGrantedAuthority(m.getRole().name())));

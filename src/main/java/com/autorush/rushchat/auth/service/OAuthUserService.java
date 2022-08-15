@@ -51,7 +51,7 @@ public class OAuthUserService implements OAuth2UserService<OAuth2UserRequest, OA
 
 
     private Member saveOrUpdate(OAuthUserDto userDto) {
-        Member member = memberRepository.findByRegistrationIdAndOAuthId(userDto.getRegisteredPlatform(), userDto.getOAuthId())
+        Member member = memberRepository.findByRegisteredPlatformAndOauthId(userDto.getRegisteredPlatform(), userDto.getOauthId())
             .map(m -> m.update(userDto.getName(), userDto.getEmail())) // OAuth 서비스에서 유저 정보 변경 내역 적용
             .orElse(userDto.toMember());
         return memberRepository.save(member);

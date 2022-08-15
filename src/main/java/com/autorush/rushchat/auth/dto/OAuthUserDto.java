@@ -12,7 +12,7 @@ import lombok.Getter;
 @Getter
 public class OAuthUserDto {
     private final String registeredPlatform;
-    private final String oAuthId;
+    private final String oauthId;
     private final String name;
     private final String nickname;
     private final String email;
@@ -22,9 +22,9 @@ public class OAuthUserDto {
     private final Role role;
 
     @Builder
-    public OAuthUserDto(String registeredPlatform, String oAuthId, String name, String nickname, String email, String profileImage) {
+    public OAuthUserDto(String registeredPlatform, String oauthId, String name, String nickname, String email, String profileImage) {
         this.registeredPlatform = registeredPlatform;
-        this.oAuthId = oAuthId;
+        this.oauthId = oauthId;
         this.name = name;
         this.nickname = nickname;
         this.email = email;
@@ -35,7 +35,7 @@ public class OAuthUserDto {
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
         map.put("registrationId", registeredPlatform);
-        map.put("id", oAuthId);
+        map.put("id", oauthId);
         map.put("name", name);
         map.put("nickname", nickname);
         map.put("email", email);
@@ -46,7 +46,7 @@ public class OAuthUserDto {
     public Member toMember() {
         return Member.builder()
             .registeredPlatform(registeredPlatform)
-            .oAuthId(oAuthId)
+            .oauthId(oauthId)
             .name(name)
             .nickname(nickname)
             .email(email)
