@@ -24,7 +24,7 @@ import lombok.Setter;
 @Entity
 @NoArgsConstructor
 @IdClass(MemberPK.class)
-@Table(name = "member", schema = "rushchat")
+//@Table(name = "member", schema = "rushchat")
 public class Member extends BaseTimeEntity {
     // info
     @Id
