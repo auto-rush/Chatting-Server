@@ -1,4 +1,4 @@
-package com.autorush.rushchat.chat;
+package com.autorush.rushchat.chat.config;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;

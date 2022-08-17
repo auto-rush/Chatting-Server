@@ -25,7 +25,7 @@ public class FrontController {
     }
 
     @GetMapping("chat")
-    public String chatGET(){
+    public String chatGET(@AuthenticationPrincipal OAuth2User principal){
 
         return "chat";
     }

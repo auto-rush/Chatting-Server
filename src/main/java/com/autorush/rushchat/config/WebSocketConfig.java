@@ -1,6 +1,6 @@
 package com.autorush.rushchat.config;
 
-import com.autorush.rushchat.chat.ChatHandler;
+import com.autorush.rushchat.chat.config.ChatHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -17,6 +17,6 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 
-        registry.addHandler(chatHandler, "ws/chat").setAllowedOrigins("*");
+        registry.addHandler(chatHandler, "/chating").setAllowedOrigins("*");
     }
 }

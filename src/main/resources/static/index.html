@@ -21,6 +21,7 @@
     login success. wait a second...
 </div>
 <button id="alarm_init">초기 알람 설정 (추후 로그인 시에 작동)</button>
+<button id="start_chat">채팅방 입장(authorization 이후 가능)</button>
 </body>
 <script type="text/javascript">
     $.ajaxSetup({
@@ -48,6 +49,9 @@
         $.get("/alarm", function(data) {
             document.location = "http://localhost:8080/alarm";
         });
+    });
+    $("#start_chat").on("click",function(){
+        document.location = "http://localhost:8080/chat";
     });
 
 </script>

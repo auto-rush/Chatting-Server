@@ -13,12 +13,12 @@ import javax.sql.DataSource;
 @EnableJpaAuditing
 public class DatabaseConfiguration {
     @Bean
-    @ConfigurationProperties(prefix="spring.datasource.hikari")
+    @ConfigurationProperties(prefix = "spring.datasource.hikari")
     public HikariConfig hikariConfig() {
         return new HikariConfig();
     }
 
-    @Bean
+    @Bean(name = "HikariDataSource")
     public DataSource dataSource() {
         return new HikariDataSource(hikariConfig());
     }
