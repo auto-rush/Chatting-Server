@@ -21,6 +21,13 @@ spring:
       max-lifetime: 30000 # default 30s
       connection-timeout: 5000 # default 30s
 
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: rushchat
+#      uri: mongodb://localhost:27017/rushchat
+
   jpa:
     generate-ddl: true
     hibernate:

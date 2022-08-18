@@ -1,4 +1,4 @@
-package com.autorush.rushchat.chat.domain;
+package com.autorush.rushchat.chat.entity;
 
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;

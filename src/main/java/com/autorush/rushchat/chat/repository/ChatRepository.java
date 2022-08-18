@@ -1,6 +1,6 @@
 package com.autorush.rushchat.chat.repository;
 
-import com.autorush.rushchat.chat.domain.Chat;
+import com.autorush.rushchat.chat.entity.Chat;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
