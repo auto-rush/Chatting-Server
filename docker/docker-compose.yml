@@ -3,6 +3,7 @@ version: "3"
 services:
   db:
     container_name: "mariadb"
+    platform: linux/x86_64
     image: mariadb:10.7.4
     ports:
       - "3306:3306"
