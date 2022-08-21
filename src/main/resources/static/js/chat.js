@@ -29,6 +29,7 @@ var chat = {
     wsOpen: function(){
         let that = this;
         that.ws = new WebSocket("ws://" + location.host + "/chating");
+        console.log('호스트 : ',location.host);
         that.wsEvt();
     },
 
