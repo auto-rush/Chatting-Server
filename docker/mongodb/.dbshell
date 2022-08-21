@@ -1,0 +1,7 @@
+user rushchat
+use rushchat
+db.chat.find().pretty()
+;
+db.createCollection('chat')
+db.chat.insertOne({name:'test mongo connection'})
+db.chat.find().pretty()
