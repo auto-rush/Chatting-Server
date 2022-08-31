@@ -36,11 +36,15 @@ class MemberRepositoryTest {
     @DisplayName("삽입 및 가져오기 테스트")
     public void insertAndGetTest() {
         String name = "asdf";
+        String registeredPlatform = "registeredPlatform";
+        String oauthId = "oauthId";
         final Member member = Member.builder()
+            .registeredPlatform(registeredPlatform)
+            .oauthId(oauthId)
             .name(name)
             .build();
         memberRepository.save(member);
-        final Member byId = memberRepository.getById(1L);
+        Member byId = memberRepository.findByRegisteredPlatformAndOauthId(registeredPlatform, oauthId).orElse(new Member());
         assertThat(byId.getName()).isEqualTo(name);
     }
 

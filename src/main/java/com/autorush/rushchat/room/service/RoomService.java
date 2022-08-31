@@ -35,7 +35,7 @@ public class RoomService {
     public void createRoom(CreateRoomDto dto) {
         if (dto.getMaxParticipants() > MAX_PARTICIPANTS)
             throw new CustomException(ErrorCode.EXCEEDED_MAX_PARTICIPANTS_VALUE);
-        Member member = memberRepository.findByRegistrationIdAndOAuthId(dto.getOwnerRegisteredPlatform(), dto.getOwnerOAuthId()).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MEMBER));
+        Member member = memberRepository.findByRegisteredPlatformAndOauthId(dto.getOwnerRegisteredPlatform(), dto.getOwnerOAuthId()).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MEMBER));
         Room room = new Room(dto.getRoomName(), dto.getOwnerOAuthId(), dto.getOwnerRegisteredPlatform(), dto.getMaxParticipants(), member);
         roomRepository.save(room);
     }
@@ -73,13 +73,13 @@ public class RoomService {
 
         if (dto.getOwnerOAuthId() != null && dto.getOwnerRegisteredPlatform() != null) {
             log.info("방 주인 변경");
-            Member member = memberRepository.findByRegistrationIdAndOAuthId(dto.getOwnerRegisteredPlatform(), dto.getOwnerOAuthId()).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MEMBER));
+            Member member = memberRepository.findByRegisteredPlatformAndOauthId(dto.getOwnerRegisteredPlatform(), dto.getOwnerOAuthId()).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MEMBER));
 //            if (!room.getRoomMembers().contains(member)) throw new CustomException(ErrorCode.NOT_FOUND_MEMBER_IN_ROOM);
 
             boolean isContain = false;
             for (RoomMember roomMember : room.getRoomMembers()) {
                 Member roomMemberMember = roomMember.getMember();
-                if (!roomMemberMember.getOAuthId().equals(member.getOAuthId())
+                if (!roomMemberMember.getOauthId().equals(member.getOauthId())
                         && !roomMemberMember.getRegisteredPlatform().equals(member.getRegisteredPlatform()))
                     return;
                 isContain = true;
@@ -101,7 +101,7 @@ public class RoomService {
     @Transactional
     public void inRoom(InOutRoomDto dto) {
         Room room = getRoom(dto.getRoomId());
-        Member member = memberRepository.findByRegistrationIdAndOAuthId(dto.getOwnerRegisteredPlatform(), dto.getOwnerOAuthId()).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MEMBER));
+        Member member = memberRepository.findByRegisteredPlatformAndOauthId(dto.getOwnerRegisteredPlatform(), dto.getOwnerOAuthId()).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MEMBER));
 
         List<RoomMember> roomMembers = room.getRoomMembers();
         Long roomId = room.getId();
@@ -114,7 +114,7 @@ public class RoomService {
     public void outRoom(InOutRoomDto dto) {
         // 퇴장
         Room room = getRoom(dto.getRoomId());
-        Member member = memberRepository.findByRegistrationIdAndOAuthId(dto.getOwnerRegisteredPlatform(), dto.getOwnerOAuthId()).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MEMBER));
+        Member member = memberRepository.findByRegisteredPlatformAndOauthId(dto.getOwnerRegisteredPlatform(), dto.getOwnerOAuthId()).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MEMBER));
         RoomMember roomMember = roomMemberRepository.findByRoomIdAndMember(room.getId(), member).orElseThrow(() -> new CustomException(ErrorCode.INVALID_INPUT_VALUE));
 
         List<RoomMember> roomMembers = room.getRoomMembers();
@@ -128,13 +128,13 @@ public class RoomService {
         }
 
         //  퇴장한 사람이 주인이 아닌 경우
-        if (!Objects.equals(room.getOwnerOAuthId(), member.getOAuthId())
+        if (!Objects.equals(room.getOwnerOAuthId(), member.getOauthId())
         && !Objects.equals(room.getOwnerRegisteredPlatform(), member.getRegisteredPlatform()))
             return;
 
         // 퇴장한 사람이 방 주인일 경우
         Member newOwner = roomMembers.get(0).getMember();
-        room.setOwnerOAuthId(newOwner.getOAuthId());
+        room.setOwnerOAuthId(newOwner.getOauthId());
         room.setOwnerRegisteredPlatform(newOwner.getRegisteredPlatform());
     }
 }

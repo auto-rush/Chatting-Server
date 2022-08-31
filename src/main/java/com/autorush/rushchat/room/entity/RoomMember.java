@@ -20,7 +20,8 @@ public class RoomMember {
     private Long roomId;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "oauth_id", referencedColumnName = "oauth_id")
+    @JoinColumn(name = "registered_platform", referencedColumnName = "registered_platform")
     private Member member;
 
 //    private Long lastMessageId;
