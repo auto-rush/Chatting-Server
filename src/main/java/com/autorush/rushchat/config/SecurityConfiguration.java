@@ -62,4 +62,16 @@ public class SecurityConfiguration {
         return http.build();
     }
 
+//     @Override
+//     protected void configure(HttpSecurity http) throws Exception {
+//         http
+//                 .authorizeRequests()
+//                 .anyRequest().permitAll().and() // 임시로 모든 요청을 허용
+//                 .headers()
+//                 .frameOptions()
+//                 .sameOrigin().and()
+//                 .cors().and()
+//                 .csrf().disable()
+//         ;
+//     }
 }
